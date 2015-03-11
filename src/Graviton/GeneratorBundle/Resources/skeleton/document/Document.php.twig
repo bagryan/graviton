@@ -15,6 +15,25 @@ use Graviton\I18nBundle\Document\TranslatableDocumentInterface;
  */
 class {{ document }} implements TranslatableDocumentInterface
 {
+
+    /**
+
+    public function getContactRef()
+    {
+    $ref = new Ref();
+    $ref->setRef('/contact/dude/'.$this->getContact()->getId());
+
+    return $ref;
+    //return new PersonContact();
+
+    }
+
+    public function setContactRef($contact)
+    {
+    $this->setContact(new PersonContact());
+    }
+     */
+
     /**
      * @var MongoId $id
      */
