@@ -171,12 +171,7 @@ class JsonDefinitionField implements DefinitionElementInterface
     public function getTypeSerializer()
     {
         if ($this->isClassType()) {
-            // render as reference?
-            if ($this->isClassRef()) {
-                $ret = self::TYPE_CLASS_REF;
-            } else {
-                $ret = $this->getClassName();
-            }
+            $ret = $this->getClassName();
 
             // collection?
             if (substr($ret, -2) == '[]') {
