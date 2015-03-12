@@ -96,15 +96,20 @@ class {{ document }} implements TranslatableDocumentInterface
         {% set translatableFields = translatableFields|merge([field.fieldName]) %}
     {% endif %}
 
+{# normal setter and getter #}
 {{ func.getter(field) }}
 {{ func.setter(field) }}
 
 {% if ('[]' in field.type or field.type == 'array') %}
+{# setter and getter for collections #}
 {{ func.adder(field) }}
 {{ func.remover(field) }}
 {% endif %}
 
 {% if field.isClassRef == true %}
+{# setter and getter for references #}
+{{ func.getterRef(field) }}
+{{ func.setterRef(field) }}
 {% endif %}
 
 {% endfor %}

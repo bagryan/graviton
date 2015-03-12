@@ -33,11 +33,11 @@
     * @return self
     */
 {% if 'Graviton' in field.type %}
-    {% if '[]' in field.type %}
-        public function set{{ field.fieldName|capitalize }}(${{ field.fieldName }})
-    {% else %}
-        public function set{{ field.fieldName|capitalize }}(\{{ field.type }} ${{ field.fieldName }})
-    {% endif %}
+{% if '[]' in field.type %}
+    public function set{{ field.fieldName|capitalize }}(${{ field.fieldName }})
+{% else %}
+    public function set{{ field.fieldName|capitalize }}(\{{ field.type }} ${{ field.fieldName }})
+{% endif %}
 {% else %}
     public function set{{ field.fieldName|capitalize }}(${{ field.fieldName }})
 {% endif %}
@@ -83,17 +83,57 @@
     * @return self
     */
 {% if 'Graviton' in field.type %}
-    {% if '[]' in field.type %}
-        public function remove{{ field.singularName|capitalize }}(\{{ field.type[0:-2] }} ${{ field.singularName }})
-    {% else  %}
-        public function remove{{ field.singularName|capitalize }}(\{{ field.type }} ${{ field.singularName }})
-    {% endif %}
+{% if '[]' in field.type %}
+    public function remove{{ field.singularName|capitalize }}(\{{ field.type[0:-2] }} ${{ field.singularName }})
+{% else  %}
+    public function remove{{ field.singularName|capitalize }}(\{{ field.type }} ${{ field.singularName }})
+{% endif %}
 {% else  %}
     public function remove{{ field.singularName|capitalize }}({{ field.type }} ${{ field.singularName }})
 {% endif %}
     {
-    $this->{{ field.fieldName }}->removeElement(${{ field.singularName }});
+        $this->{{ field.fieldName }}->removeElement(${{ field.singularName }});
 
-    return $this;
+        return $this;
+    }
+{% endmacro %}
+
+{% macro setterRef(field) %}
+    /**
+    * Set {{ field.fieldName }}Ref
+    *
+    * @param \Graviton\CoreBundle\Document\Ref Ref object for {{ field.fieldName }}
+    *
+    * @return self
+    */
+{% if '[]' in field.type %}
+    public function set{{ field.fieldName|capitalize }}Ref(${{ field.fieldName }}Ref)
+{% else %}
+    public function set{{ field.fieldName|capitalize }}Ref(\Graviton\CoreBundle\Document\Ref ${{ field.fieldName }}Ref)
+{% endif %}
+    {
+{% if '[]' in field.type %}
+        //$this->{{ field.fieldName }} = new ArrayCollection(${{ field.fieldName }}Ref);
+{% else %}
+        //$this->{{ field.fieldName }} = ${{ field.fieldName }}Ref;
+{% endif %}
+
+        return $this;
+    }
+{% endmacro %}
+
+{% macro getterRef(field) %}
+    /**
+    * Get {{ field.fieldName }}Ref
+    *
+{% if '[]' in field.type %}
+    * @return \Graviton\CoreBundle\Document\Ref[] ${{ field.fieldName }}Ref
+{% else %}
+    * @return \Graviton\CoreBundle\Document\Ref ${{ field.fieldName }}Ref
+{% endif %}
+    */
+    public function get{{ field.fieldName|capitalize }}Ref()
+    {
+        //return $this->{{ field.fieldName }};
     }
 {% endmacro %}
