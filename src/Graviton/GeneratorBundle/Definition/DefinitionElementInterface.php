@@ -34,6 +34,8 @@ interface DefinitionElementInterface
 
     const TYPE_OBJECT = 'object';
 
+    const TYPE_CLASS_REF = 'Graviton\CoreBundle\Document\Ref';
+
     const REL_TYPE_REF = 'reference';
 
     const REL_TYPE_EMBED = 'embed';
@@ -51,6 +53,21 @@ interface DefinitionElementInterface
      * @return boolean
      */
     public function isHash();
+
+    /**
+     * Return whether this a reference to a class (and as such should be rendered as
+     * class Ref)
+     *
+     * @return bool true if yes, false if not
+     */
+    public function isClassRef();
+
+    /**
+     * Returns whether this is a class type (= not a primitive)
+     *
+     * @return boolean true if yes
+     */
+    public function isClassType();
 
     /**
      * Returns the type of this element

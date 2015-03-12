@@ -145,7 +145,8 @@ class JsonDefinitionHash implements DefinitionElementInterface
             'relType' => $this->getRelType(),
             'doctrineType' => $this->getTypeDoctrine(),
             'serializerType' => $this->getTypeSerializer(),
-            'isClassType' => true
+            'isClassType' => $this->isClassType(),
+            'isClassRef' => $this->isClassRef()
         );
     }
 
@@ -201,6 +202,17 @@ class JsonDefinitionHash implements DefinitionElementInterface
     public function isClassType()
     {
         return true;
+    }
+
+    /**
+     * Return whether this a reference to a class (and as such should be rendered as
+     * class Ref)
+     *
+     * @return bool true if yes, false if not
+     */
+    public function isClassRef()
+    {
+        return false;
     }
 
     /**

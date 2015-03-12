@@ -102,6 +102,7 @@ class JsonDefinitionField implements DefinitionElementInterface
         $ret['serializerType'] = $this->getTypeSerializer();
         $ret['relType'] = $this->getRelType();
         $ret['isClassType'] = $this->isClassType();
+        $ret['isClassRef'] = $this->isClassRef();
         $ret['constraints'] = $this->getConstraints();
 
         return $ret;
@@ -170,7 +171,13 @@ class JsonDefinitionField implements DefinitionElementInterface
     public function getTypeSerializer()
     {
         if ($this->isClassType()) {
-            $ret = $this->getClassName();
+            // render as reference?
+            if ($this->isClassRef()) {
+                $ret = self::TYPE_CLASS_REF;
+            } else {
+                $ret = $this->getClassName();
+            }
+
             // collection?
             if (substr($ret, -2) == '[]') {
                 $ret = 'array<'.substr($ret, 0, -2).'>';
@@ -210,6 +217,17 @@ class JsonDefinitionField implements DefinitionElementInterface
     public function isClassType()
     {
         return preg_match('/^class\:/', $this->def->type) > 0;
+    }
+
+    /**
+     * Return whether this a reference to a class (and as such should be rendered as
+     * class Ref)
+     *
+     * @return bool true if yes, false if not
+     */
+    public function isClassRef()
+    {
+        return $this->isClassType() === true && $this->getRelType() == self::REL_TYPE_REF;
     }
 
     /**

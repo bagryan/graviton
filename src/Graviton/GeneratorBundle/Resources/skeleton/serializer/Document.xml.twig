@@ -26,22 +26,12 @@
       {% set getterMethod = "get#{field.fieldName|capitalize}" %}
     {% endif %}
 
-    <!--
-
-    <property name="contact" max-depth="5" serialized-name="contact" accessor-getter="getContactRef" accessor-setter="setContactRef">
-      <type><![CDATA[Graviton\CoreBundle\Document\Ref]]></type>
-    </property>
-    -->
-
-    {% if field.isClassType == true and field.relType == 'reference' %}
-        <property name="{{ field.fieldName }}" max-depth="5" serialized-name="{{ field.exposedName }}" accessor-getter="{{ getterMethod }}Ref" accessor-setter="set{{ field.fieldName|capitalize }}Ref">
-            <type><![CDATA[Graviton\CoreBundle\Document\Ref]]></type>
-        </property>
-    {% else %}
-        <property name="{{ field.fieldName }}" max-depth="5" serialized-name="{{ field.exposedName }}" accessor-getter="{{ getterMethod }}" accessor-setter="set{{ field.fieldName|capitalize }}">
-            <type><![CDATA[{{ field.serializerType }}]]></type> <!-- reltype = {{ field.relType }} -->
-        </property>
+    {% if field.isClassRef == true %}
     {% endif %}
+
+    <property name="{{ field.fieldName }}" max-depth="5" serialized-name="{{ field.exposedName }}" accessor-getter="{{ getterMethod }}" accessor-setter="set{{ field.fieldName|capitalize }}">
+      <type><![CDATA[{{ field.serializerType }}]]></type>
+    </property>
 
 {% endfor %}
   </class>
