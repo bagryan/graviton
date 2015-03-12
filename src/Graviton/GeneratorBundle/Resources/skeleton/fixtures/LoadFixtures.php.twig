@@ -7,6 +7,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use JMS\Serializer\DeserializationContext;
 
 use {{ base }}Document\{{ document }};
 
@@ -55,7 +56,8 @@ class Load{{ document }}Data extends AbstractFixture implements OrderedFixtureIn
                 $thisRecord = $serializer->deserialize(
                     json_encode($record),
                     '{{ base }}Document\{{ document }}',
-                    'json'
+                    'json',
+                    DeserializationContext::create()->setGroups(array('Default', 'internal'))
                 );
 
                 // obvious refs..

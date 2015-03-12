@@ -31,11 +31,23 @@
             <call method="setSerializeNull">
                 <argument type="constant">false</argument>
             </call>
+            <call method="setGroups">
+                <argument type="collection">
+                    <argument>Default</argument>
+                    <argument>external</argument>
+                </argument>
+            </call>
         </service>
         <service id="graviton.rest.serializer.deserializercontext"
                  class="%graviton.rest.serializer.deserializercontext.class%">
             <call method="setSerializeNull">
                 <argument type="constant">true</argument>
+            </call>
+            <call method="setGroups">
+                <argument type="collection">
+                    <argument>Default</argument>
+                    <argument>external</argument>
+                </argument>
             </call>
         </service>
 
