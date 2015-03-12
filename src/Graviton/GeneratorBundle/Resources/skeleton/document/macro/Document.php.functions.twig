@@ -1,0 +1,99 @@
+
+{% macro getter(field) %}
+    /**
+    * Get {{ field.fieldName }}
+    *
+{% if 'Graviton' in field.type %}
+    * @return \{{ field.type }} ${{ field.fieldName }}
+{% else %}
+    * @return {{ field.type }} ${{ field.fieldName }}
+{% endif %}
+    */
+{% if 'boolean' in field.type %}
+    public function is{{ field.fieldName|capitalize }}()
+{% else %}
+    public function get{{ field.fieldName|capitalize }}()
+{% endif %}
+    {
+        return $this->{{ field.fieldName }};
+    }
+{% endmacro %}
+
+
+{% macro setter(field) %}
+    /**
+    * Set {{ field.fieldName }}
+    *
+{% if 'Graviton' in field.type %}
+    * @param \{{ field.type }} ${{ field.fieldName }} object for {{ field.fieldName }}
+{% else %}
+    * @param {{ field.type }} ${{ field.fieldName }} value for {{ field.fieldName }}
+{% endif %}
+    *
+    * @return self
+    */
+{% if 'Graviton' in field.type %}
+    {% if '[]' in field.type %}
+        public function set{{ field.fieldName|capitalize }}(${{ field.fieldName }})
+    {% else %}
+        public function set{{ field.fieldName|capitalize }}(\{{ field.type }} ${{ field.fieldName }})
+    {% endif %}
+{% else %}
+    public function set{{ field.fieldName|capitalize }}(${{ field.fieldName }})
+{% endif %}
+    {
+{% if '[]' in field.type %}
+        $this->{{ field.fieldName }} = new ArrayCollection(${{ field.fieldName }});
+{% else %}
+        $this->{{ field.fieldName }} = ${{ field.fieldName }};
+{% endif %}
+
+        return $this;
+    }
+{% endmacro %}
+
+{% macro adder(field) %}
+    /**
+    * add element to {{ field.fieldName }}
+    *
+{% if 'Graviton' in field.type %}
+    * @param \{{ field.type[0:-2] }} ${{ field.singularName }} object to add to {{ field.fieldName }}
+{% else %}
+    * @param {{ field.type }} ${{ field.singularName }} value to add to {{ field.fieldName }}
+{% endif %}
+    *
+    * @return self
+    */
+    public function add{{ field.singularName|capitalize }}(${{field.singularName}})
+    {
+        $this->{{ field.fieldName }}[] = ${{ field.singularName }};
+    }
+{% endmacro %}
+
+{% macro remover(field) %}
+    /**
+    * remove element from {{ field.fieldName }}
+    *
+{% if '[]' in field.type %}
+    * @param \{{ field.type[0:-2] }} ${{ field.singularName }} object to remove from {{ field.fieldName }}
+{% else %}
+    * @param \{{ field.type }} ${{ field.singularName }} object to remove from {{ field.fieldName }}
+{% endif %}
+    *
+    * @return self
+    */
+{% if 'Graviton' in field.type %}
+    {% if '[]' in field.type %}
+        public function remove{{ field.singularName|capitalize }}(\{{ field.type[0:-2] }} ${{ field.singularName }})
+    {% else  %}
+        public function remove{{ field.singularName|capitalize }}(\{{ field.type }} ${{ field.singularName }})
+    {% endif %}
+{% else  %}
+    public function remove{{ field.singularName|capitalize }}({{ field.type }} ${{ field.singularName }})
+{% endif %}
+    {
+    $this->{{ field.fieldName }}->removeElement(${{ field.singularName }});
+
+    return $this;
+    }
+{% endmacro %}
