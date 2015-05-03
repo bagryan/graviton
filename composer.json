@@ -81,6 +81,9 @@
             "./vendor/bin/phpcs --standard=ENTB  --ignore='src/GravitonDyn/*' --ignore='app/cache/*' --ignore='app/check.php' --ignore='app/SymfonyRequirements.php' --ignore='web/check.php' --ignore='web/config.php' --ignore='app/AppCache.php' --ignore='*.css' --ignore='*.js' src/ app/ web/"
         ]
     },
+    "bin": [
+        "bin/graviton"
+    ],
     "config": {
         "bin-dir": "vendor/bin",
         "github-oauth": {

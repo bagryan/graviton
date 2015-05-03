@@ -1,12 +1,12 @@
 #!/usr/bin/env php
 <?php
 
-// this file is replicated in bin/graviton for downstream use
+// this file is replicated in app/console for upstream compoat
 
 set_time_limit(0);
 
-require_once __DIR__.'/bootstrap.php.cache';
-require_once __DIR__.'/AppKernel.php';
+require_once __DIR__.'/../app/bootstrap.php.cache';
+require_once __DIR__.'/../app/AppKernel.php';
 
 use Graviton\AppKernel;
 use Graviton\BundleBundle\GravitonBundleBundle;
